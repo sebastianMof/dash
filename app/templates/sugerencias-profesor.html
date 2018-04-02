@@ -1,0 +1,64 @@
+{% extends 'layout-profesor.html' %}
+{% block title %}Sugerencias{% endblock %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+	<div class="row">
+		<div class="col-sm-4">
+	  			<h2 style="text-indent: 100px">Sugerencias</h2>
+	  	</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-8" style="text-indent: 40px">
+				{% set numero = request.args.get('numero') | int %}
+				<h3>{{ sugerencias[numero]['sugerencia'].titulo }}</h3><br>
+
+				<h4 style="text-indent: 60px">{{ sugerencias[numero]['sugerencia'].contenido }}</h4> <br>
+
+				<h3>Respuestas</h3> <br>
+
+		{% for respuesta in sugerencias[numero]['respuestas'] %}
+			<h4 style="text-indent: 60px"> {{ respuesta.contenido }}</h4>
+		{% endfor %}
+		</div>
+		<div class="col-sm-2">
+			<ul>
+				<li style="list-style-type: none"> <img src="https://cdn3.iconfinder.com/data/icons/musthave/128/Add.png" height="20" width="20"> Nueva sugerencia </li><br>
+				{% for sugerencia in sugerencias %}
+					<a href="/sugerencias?numero={{ sugerencias.index(sugerencia) }}"><li>{{ sugerencia['sugerencia'].titulo }}</li></a>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="col-sm-1">
+			<ul style="list-style-type: none">
+				<br>
+				<li>Estado</li>
+				{% for sugerencia in sugerencias %}
+					<li>
+					{% if sugerencia['sugerencia'].estado == 'Aceptado' %}
+						<img src="https://cdn3.iconfinder.com/data/icons/musthave/128/Stock%20Index%20Up.png" height="20" width="20">
+					{% elif sugerencia['sugerencia'].estado == 'Rechazado' %}
+						<img src="https://cdn3.iconfinder.com/data/icons/musthave/128/Stock%20Index%20Down.png" height="20" width="20">
+					{% elif sugerencia['sugerencia'].estado == 'Espera' %}
+						<img src="https://cdn3.iconfinder.com/data/icons/musthave/128/Help.png" height="20" width="20">
+					{% endif %}
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="col-sm-1">
+			<ul style="list-style-type: none">
+				<br>
+				<br>
+				{% for sugerencia in sugerencias['sugerencia'] %}
+					<li><img src="https://cdn3.iconfinder.com/data/icons/musthave/128/Remove.png" height="20" width="20"> 
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+{% endblock %}

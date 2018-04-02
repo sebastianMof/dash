@@ -1,0 +1,40 @@
+{% extends 'layout-administrador.html' %}
+{% block title %}Horarios{% endblock %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+	<div class="row">
+		<div class="col-sm-4">
+	  			<h2 style="text-indent: 100px">Horarios</h2>
+	  	</div>
+	</div>
+	<div class="row">
+		
+	{% set numero = request.args.get('numero') | int %}
+	<h2 style="text-indent: 50px">Horario escolar - {{ numero }}</h2><br>
+	</div>
+	<div class="row">
+				{% for i in ['Lunes', 'Martes', 'Miercoles', 'Juevez', 'Viernes'] %}
+					<div class="col-sm-2" style="text-indent: 40px">
+						{{ i }}
+						{% for j in ['A', 'B', 'C', 'D', 'E'] %}
+							<br>
+							{{ j }}
+						{% endfor %}
+					</div>
+				{% endfor %}
+		<div class="col-sm-2">
+			<ul>
+				<li style="list-style-type: none"> <img src="https://cdn3.iconfinder.com/data/icons/musthave/128/Add.png" height="20" width="20"> Nuevo horario escolar </li><br>
+				{% for horario in horarios %}
+					<a href="/sugerencias?numero={{ horarios.index(horario) }}"><li> Horario escolar - {{ numero }} </li></a>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<div class="row"> {{ horarios }}</div>
+{% endblock %}
